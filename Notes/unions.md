@@ -42,10 +42,45 @@ function welcomePeople(x: string[] | string) {
   }
 }
 ```
-But sometimes narrowing is not required, such as in this case:
+4.But sometimes narrowing is not required, such as in this case:
 ```typescript
 // Return type is inferred as number[] | string
 function getFirstThree(x: number[] | string) {
   return x.slice(0, 3);
 }
 ```
+
+5.**Another custom example related to roles**
+
+```typescript {cmd="node"}
+type User={
+    name:string,
+    id:number,
+    admin:boolean
+};
+type admin={
+    username:string,
+    id:number,
+    admin:true,
+}
+let aryan:User|admin={name:"Aryan",id:1017,admin:false};
+aryan={username:"as",id:1017,admin:true};
+
+function user(usr:User|admin):User|admin{
+    if('username' in usr){
+        return {username:usr.username,id:usr.id,admin:usr.admin};
+    }
+    return {name:"Aryan",id:1007,admin:false};
+}
+
+let usr=user(aryan);
+console.log(usr);
+```
+6.To have mixed type array
+```typescript {cmd="node"}
+const data:number[]=[1,2,3];
+const data2:string[]=["1","2"];
+const data3:(number|string)[]=[1,2,"aryan"];
+//( | ) will allow us to have a mixed type safe array in typescript
+```
+
